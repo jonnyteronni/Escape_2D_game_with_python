@@ -1,28 +1,79 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Jul  1 13:55:31 2020
-
-@author: jonnyteronni
-"""
-
 
 # define rooms and items
 
-couch = {
-    "name": "couch",
-    "type": "furniture",
-}
 
+# List of doors
 door_a = {
     "name": "door a",
     "type": "door",
 }
 
+door_b = {
+    "name": "door b",
+    "type": "door",
+}
+
+door_c = {
+    "name": "door c",
+    "type": "door",
+}
+
+door_d = {
+    "name": "door d",
+    "type": "door",
+}
+
+# List of keys
 key_a = {
     "name": "key for door a",
     "type": "key",
     "target": door_a,
+}
+
+key_b = {
+    "name": "key for door b",
+    "type": "key",
+    "target": door_b,
+}
+
+key_c = {
+    "name": "key for door c",
+    "type": "key",
+    "target": door_c,
+}
+
+key_d = {
+    "name": "key for door d",
+    "type": "key",
+    "target": door_d,
+}
+
+
+# List of rooms
+game_room = {
+    "name": "game room",
+    "type": "room",
+}
+
+bedroom1 = {
+    "name": "bedroom 1",
+    "type": "room",
+}
+
+bedroom2 = {
+    "name": "bedroom 2",
+    "type": "room",
+}
+
+living_room = {
+    "name": "living room",
+    "type": "room",
+}
+
+# List of items in game room
+couch = {
+    "name": "couch",
+    "type": "furniture",
 }
 
 piano = {
@@ -30,31 +81,62 @@ piano = {
     "type": "furniture",
 }
 
-game_room = {
-    "name": "game room",
-    "type": "room",
+# List of items in bedroom 1
+queen_bed = {
+    "name": "queen bed",
+    "type": "furniture",
 }
+
+# List of items in bedroom 2
+double_bed = {
+    "name": "double bed",
+    "type": "furniture",
+}
+
+dresser = {
+    "name": "dresser",
+    "type": "furniture",
+}
+
+# List of items in living room
+dinning_table = {
+    "name": "dinning table",
+    "type": "furniture",
+}
+
+
 
 outside = {
   "name": "outside"
 }
 
-all_rooms = [game_room, outside]
 
-all_doors = [door_a]
+all_rooms = [game_room, bedroom1, bedroom2, living_room, outside]
+
+
+all_doors = [door_a,door_b,door_c,door_d]
 
 # define which items/rooms are related
 
 object_relations = {
     "game room": [couch, piano, door_a],
+    "bedroom 1": [queen_bed, door_b, door_c],
+    "bedroom 2": [double_bed, dresser, door_b],
+    "living room": [dinning_table, door_c, door_d],
     "piano": [key_a],
-    "outside": [door_a],
-    "door a": [game_room, outside]
+    "queen bed": [key_b],
+    "double bed": [key_c],
+    "dresser": [key_d],
+    "outside": [door_d],
+    "door a": [game_room, bedroom1],
+    "door b": [bedroom1, bedroom2],
+    "door c": [bedroom1, living_room],
+    "door d": [living_room, outside]
 }
 
-# define game state. Do not directly change this dict. 
+# define game state. Do not directly change this dict.
 # Instead, when a new game starts, make a copy of this
-# dict and use the copy to store gameplay state. This 
+# dict and use the copy to store gameplay state. This
 # way you can replay the game multiple times.
 
 INIT_GAME_STATE = {
@@ -63,7 +145,6 @@ INIT_GAME_STATE = {
     "target_room": outside
 }
 
-In [2]:
 
 def linebreak():
     """
@@ -81,22 +162,24 @@ def start_game():
 def play_room(room):
     """
     Play a room. First check if the room being played is the target room.
-    If it is, the game will end with success. Otherwise, let player either 
+    If it is, the game will end with success. Otherwise, let player either
     explore (list all items in this room) or examine an item found here.
     """
-    game_state["current_room"] = room
+    
+    
+    game_state["current_room"] = room     #TODO: Apagar?
     if(game_state["current_room"] == game_state["target_room"]):
         print("Congrats! You escaped the room!")
     else:
-        print("You are now in " + room["name"])
-        intended_action = input("What would you like to do? Type 'explore' or 'examine'?").strip()
+        print("You are now in " + room['name'])
+        intended_action = input("What would you like to do? Type 'explore' or 'examine'?\n").strip()
         if intended_action == "explore":
             explore_room(room)
             play_room(room)
         elif intended_action == "examine":
-            examine_item(input("What would you like to examine?").strip())
+            examine_item(input("What would you like to examine?\n").strip())
         else:
-            print("Not sure what you mean. Type 'explore' or 'examine'.")
+            print("Not sure what you mean. Type 'explore' or 'examine'.\n")
             play_room(room)
         linebreak()
 
@@ -121,7 +204,7 @@ def examine_item(item_name):
     """
     Examine an item which can be a door or furniture.
     First make sure the intended item belongs to the current room.
-    Then check if the item is a door. Tell player if key hasn't been 
+    Then check if the item is a door. Tell player if key hasn't been
     collected yet. Otherwise ask player if they want to go to the next
     room. If the item is not a door, then check if it contains keys.
     Collect the key if found and update the game state. At the end,
@@ -131,7 +214,7 @@ def examine_item(item_name):
     current_room = game_state["current_room"]
     next_room = ""
     output = None
-    
+
     for item in object_relations[current_room["name"]]:
         if(item["name"] == item_name):
             output = "You examine " + item_name + ". "
@@ -141,7 +224,7 @@ def examine_item(item_name):
                     if(key["target"] == item):
                         have_key = True
                 if(have_key):
-                    output += "You unlock it with a key you have."
+                    output = "You unlock it with a key you have."
                     next_room = get_next_room_of_door(item, current_room)
                 else:
                     output += "It is locked but you don't have the key."
@@ -157,15 +240,13 @@ def examine_item(item_name):
 
     if(output is None):
         print("The item you requested is not found in the current room.")
-    
-    if(next_room and input("Do you want to go to the next room? Ener 'yes' or 'no'").strip() == 'yes'):
+
+    if(next_room and input("Do you want to go to the next room? 'yes' or 'no'").strip() == 'yes'):
         play_room(next_room)
     else:
         play_room(current_room)
 
-In [3]:
 
 game_state = INIT_GAME_STATE.copy()
 
 start_game()
-
