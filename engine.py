@@ -308,6 +308,26 @@ class game_class(arcade.Window):
         self.rat_c_sprinte.center_x = 18 + 32*8
         self.rat_c_sprinte.center_y = 402-32*4
 
+        # Dinning table room C
+        tabledinning_c_sprinte = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_506.png", SPRITE_SCALING)
+        tabledinning_c_sprinte.center_x = 18 + 32*8
+        tabledinning_c_sprinte.center_y = 402-32*5
+        self.wall_list.append(tabledinning_c_sprinte)
+
+        #Seat on dinning table room C
+        self.seat1_c_sprinte = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_530.png", SPRITE_SCALING)
+        self.seat1_c_sprinte.angle = -90
+        self.seat1_c_sprinte.center_x = 18 + 32*7
+        self.seat1_c_sprinte.center_y = 402-32*5
+
+        self.seat2_c_sprinte = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_530.png", SPRITE_SCALING)
+        self.seat2_c_sprinte.center_x = 18 + 32*8
+        self.seat2_c_sprinte.center_y = 402-32*6
+
+        self.seat3_c_sprinte = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_530.png", SPRITE_SCALING)
+        self.seat3_c_sprinte.angle = 90
+        self.seat3_c_sprinte.center_x = 18 + 32*9
+        self.seat3_c_sprinte.center_y = 402-32*5
 
         # Build Living Room
         # Walls Living Room
@@ -443,6 +463,9 @@ class game_class(arcade.Window):
         #Draw room class C
         self.door_c_list.draw()
         self.rat_c_sprinte.draw()
+        self.seat1_c_sprinte.draw()
+        self.seat2_c_sprinte.draw()
+        self.seat3_c_sprinte.draw()
 
         # Draw living room
         self.door_living_list.draw()
