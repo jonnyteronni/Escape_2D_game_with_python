@@ -22,11 +22,15 @@ python -m arcade.examples.sprite_no_coins_on_walls
 import arcade
 import random
 import os
+import sys
 
 SPRITE_SCALING = 0.5
 SPRITE_PLAYER_SCALING = 0.2
 SPRITE_WALL_SCALING = 0.5
 SPRITE_BAG_SCALING = 0.3
+SPRITE_CAR_SCALING = 2
+SPRITE_LAPTOP_SCALING = 0.2
+SPRITE_RAT_SCALING = 0.5
 SPRITE_SCALING_COIN = 0.2
 
 SCREEN_WIDTH = 800
@@ -166,9 +170,19 @@ class game_class(arcade.Window):
             self.wall_list.append(wall)
 
         #Furniture Room A
+        #Small couch on room A
         self.sofa_a_sprinte = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_450.png", SPRITE_SCALING)
         self.sofa_a_sprinte.center_x = 18 + 32
         self.sofa_a_sprinte.center_y = 402 + 32
+
+        #Bed on room A
+        self.bed1_a_sprite = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_102.png", SPRITE_SCALING)
+        self.bed1_a_sprite.angle = -90
+        self.bed1_a_sprite.center_x = 18 + 32
+        self.bed1_a_sprite.center_y = 402 + 32*4
+        self.bed2_a_sprite = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_77.png", SPRITE_SCALING)
+        self.bed2_a_sprite.center_x = 18 + 32*2
+        self.bed2_a_sprite.center_y = 402 + 32*4
 
         # Door Room A
         door_a = arcade.Sprite("kenney_simplifiedplatformer/PNG/Tiles/platformPack_tile052.png", SPRITE_SCALING)
@@ -199,9 +213,33 @@ class game_class(arcade.Window):
         self.door_b_list.append(door_b)
 
         #Furniture Room B
+        #Plant with key on room B
         self.plant_b_sprinte = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_134.png", SPRITE_SCALING)
-        self.plant_b_sprinte.center_x = 18 + 32*9
-        self.plant_b_sprinte.center_y = 402 + 32*3
+        self.plant_b_sprinte.center_x = 18 + 32*6
+        self.plant_b_sprinte.center_y = 402 + 32*4
+
+        #Desk room B
+        desk1_b_sprite = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_46.png", SPRITE_SCALING)
+        desk1_b_sprite.center_x = 18 + 32*6
+        desk1_b_sprite.center_y = 402 + 32*3
+        desk2_b_sprite = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_46.png", SPRITE_SCALING)
+        desk2_b_sprite.center_x = 18 + 32*6
+        desk2_b_sprite.center_y = 402 + 32*2
+        self.wall_list.append(desk1_b_sprite)
+        self.wall_list.append(desk2_b_sprite)
+
+        #Laptop on room B
+        self.laptop_b_sprinte = arcade.Sprite("generic-items-160-assets/PNG/Colored/genericItem_color_050.png", SPRITE_LAPTOP_SCALING)
+        self.laptop_b_sprinte.angle = 90
+        self.laptop_b_sprinte.center_x = 18 + 32*6
+        self.laptop_b_sprinte.center_y = 402 + 32*3
+
+        #Chair on room B
+        self.chair_b_sprinte = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_531.png", SPRITE_SCALING)
+        self.chair_b_sprinte.angle = 90
+        self.chair_b_sprinte.center_x = 18 + 32*7
+        self.chair_b_sprinte.center_y = 402 + 32*3
+
 
         # Build Room C
         # Walls Room C
@@ -232,6 +270,45 @@ class game_class(arcade.Window):
         door_c.center_y = 402-32*3
         self.door_c_list.append(door_c)
 
+        #Furniture Room C
+        # Table Room C
+        table1_c_sprite = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_321.png", SPRITE_SCALING)
+        table1_c_sprite.center_x = 18 + 32*5
+        table1_c_sprite.center_y = 402-32*6
+        self.wall_list.append(table1_c_sprite)
+
+        table2_c_sprite = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_321.png", SPRITE_SCALING)
+        table2_c_sprite.center_x = 18 + 32*3
+        table2_c_sprite.center_y = 402-32*6
+        self.wall_list.append(table2_c_sprite)
+
+        table3_c_sprite = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_321.png", SPRITE_SCALING)
+        table3_c_sprite.center_x = 18 + 32*2
+        table3_c_sprite.center_y = 402-32*6
+        self.wall_list.append(table3_c_sprite)
+
+        table4_c_sprite = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_321.png", SPRITE_SCALING)
+        table4_c_sprite.center_x = 18 + 32*1
+        table4_c_sprite.center_y = 402-32*6
+        self.wall_list.append(table4_c_sprite)
+
+        sink_c_sprite = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_323.png", SPRITE_SCALING)
+        sink_c_sprite.center_x = 18 + 32*4
+        sink_c_sprite.center_y = 402-32*6
+        self.wall_list.append(sink_c_sprite)
+
+        stove_c_sprinte = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_297.png", SPRITE_SCALING)
+        stove_c_sprinte.center_x = 18 + 32*6
+        stove_c_sprinte.center_y = 402-32*6
+        self.wall_list.append(stove_c_sprinte)
+
+        #Rat with key
+        self.rat_c_sprinte = arcade.Sprite("rat.png", SPRITE_RAT_SCALING)
+        self.rat_c_sprinte.angle = 90
+        self.rat_c_sprinte.center_x = 18 + 32*8
+        self.rat_c_sprinte.center_y = 402-32*4
+
+
         # Build Living Room
         # Walls Living Room
         # Vertical wall Living Room
@@ -248,10 +325,41 @@ class game_class(arcade.Window):
         self.door_living_list.append(door_living)
 
         #Furniture Living Room
+        #Plant with key
         self.plant_living_sprinte = arcade.Sprite("kenney_simplifiedplatformer/PNG/Tiles/platformPack_tile045.png", SPRITE_SCALING)
         self.plant_living_sprinte.center_x = 18 + 32*22
         self.plant_living_sprinte.center_y = 50 + 32
 
+        #Big orange sofa
+        self.bsofa1_living_sprinte = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_474.png", SPRITE_SCALING)
+        self.bsofa1_living_sprinte.center_x = 18 + 32*18
+        self.bsofa1_living_sprinte.center_y = 50 + 32*11
+
+        self.bsofa2_living_sprinte = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_475.png", SPRITE_SCALING)
+        self.bsofa2_living_sprinte.center_x = 18 + 32*19
+        self.bsofa2_living_sprinte.center_y = 50 + 32*11
+
+        self.bsofa3_living_sprinte = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_476.png", SPRITE_SCALING)
+        self.bsofa3_living_sprinte.center_x = 18 + 32*20
+        self.bsofa3_living_sprinte.center_y = 50 + 32*11
+
+        # Small right orange couch
+        self.couch1_living_sprinte = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_477.png", SPRITE_SCALING)
+        self.couch1_living_sprinte.angle = 90
+        self.couch1_living_sprinte.center_x = 18 + 32*21
+        self.couch1_living_sprinte.center_y = 50 + 32*13
+
+        # Small left orange couch
+        self.couch2_living_sprinte = arcade.Sprite("kenney_topdown-shooter/PNG/Tiles/tile_477.png", SPRITE_SCALING)
+        self.couch2_living_sprinte.angle = -90
+        self.couch2_living_sprinte.center_x = 18 + 32*17
+        self.couch2_living_sprinte.center_y = 50 + 32*13
+
+
+        # Finish line for outside to kill the game
+        self.car_out_sprite = arcade.Sprite("kenney_pixelcarpack_kenney/PNG/Cars/suv.png", SPRITE_CAR_SCALING)
+        self.car_out_sprite.center_x = 18 + 32*2
+        self.car_out_sprite.center_y = 50 - 32
 
 
         # -- Randomly place coins where there are no walls
@@ -303,7 +411,7 @@ class game_class(arcade.Window):
         if game_state["key_living"] != 1:
             self.physics_engine_door_living = arcade.PhysicsEngineSimple(self.player_sprite, self.door_living_list)
         # Set the background color
-        arcade.set_background_color(arcade.color.AMAZON)
+        arcade.set_background_color(arcade.color.BLACK)
 
     def on_draw(self):
         """
@@ -317,16 +425,42 @@ class game_class(arcade.Window):
         self.floor_list.draw()
         self.wall_list.draw()
         self.coin_list.draw()
-        self.door_exit_list.draw()
-        self.door_a_list.draw()
-        self.door_b_list.draw()
-        self.door_c_list.draw()
-        self.door_living_list.draw()
+
+        # Draw Room A
+        self.bed1_a_sprite.draw()
+        self.bed2_a_sprite.draw()
         self.sofa_a_sprinte.draw()
-        self.plant_living_sprinte.draw()
+        self.door_a_list.draw()
+
+        #Draw room B
+        #self.desk1_b_sprite.draw()
+        #self.desk2_b_sprite.draw()
+        self.door_b_list.draw()
+        self.laptop_b_sprinte.draw()
+        self.chair_b_sprinte.draw()
         self.plant_b_sprinte.draw()
+
+        #Draw room class C
+        self.door_c_list.draw()
+        self.rat_c_sprinte.draw()
+
+        # Draw living room
+        self.door_living_list.draw()
+        self.plant_living_sprinte.draw()
+        self.bsofa1_living_sprinte.draw()
+        self.bsofa2_living_sprinte.draw()
+        self.bsofa3_living_sprinte.draw()
+        self.couch1_living_sprinte.draw()
+        self.couch2_living_sprinte.draw()
+
+
+        self.door_exit_list.draw()
         self.inventory_sprite.draw()
         self.player_sprite.draw()
+
+        # Draw outside
+        self.car_out_sprite.draw()
+
 
         # Draw keys on inventory next to bag image
         if game_state["key_exit"] == 1:
@@ -374,9 +508,34 @@ class game_class(arcade.Window):
                 self.key_c_sprite = arcade.Sprite("kenney_simplifiedplatformer/PNG/Items/platformPack_item013.png", SPRITE_SCALING)
                 self.key_c_sprite.center_x = 560 + 32*2
                 self.key_c_sprite.center_y = 640
+
+            # Find key d on plant on room C
+            key_living_hit = arcade.check_for_collision(self.player_sprite, self.rat_c_sprinte)
+            if key_living_hit:
+                game_state["key_living"] = 1
+                #arcade.draw_text("You found key A", SCREEN_WIDTH, SCREEN_HEIGHT-100, arcade.color.WHITE, font_size=40, anchor_x="center")
+                #self.key_a_sprite.remove_from_sprite_lists()
+                self.key_living_sprite = arcade.Sprite("kenney_simplifiedplatformer/PNG/Items/platformPack_item015.png", SPRITE_SCALING)
+                self.key_living_sprite.center_x = 560 + 32*3
+                self.key_living_sprite.center_y = 640
+
+            key_exit_hit = arcade.check_for_collision(self.player_sprite, self.couch1_living_sprinte)
+            if key_exit_hit:
+                game_state["key_exit"] = 1
+                #arcade.draw_text("You found key A", SCREEN_WIDTH, SCREEN_HEIGHT-100, arcade.color.WHITE, font_size=40, anchor_x="center")
+                #self.key_a_sprite.remove_from_sprite_lists()
+                self.key_exit_sprite = arcade.Sprite("kenney_simplifiedplatformer/PNG/Items/platformPack_item012.png", SPRITE_SCALING)
+                self.key_exit_sprite.center_x = 560 + 32*4
+                self.key_exit_sprite.center_y = 640
+
+
+        # Exit game when reaching car
+        key_car_hit = arcade.check_for_collision(self.player_sprite, self.car_out_sprite)
+        if key_car_hit:
+            sys.exit()
+
         #if self.O_pressed:
 
-                # Set up keys
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
