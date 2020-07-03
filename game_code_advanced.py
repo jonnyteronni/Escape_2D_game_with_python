@@ -163,8 +163,9 @@ INIT_GAME_STATE = {
 }
 
 from threading import Thread
-from time import sleep
+import time
 import sys
+import random
 
 def timeout_question():
     for remaining in range(10, 0, -1):
@@ -172,7 +173,8 @@ def timeout_question():
         sys.stdout.write("{:2d} seconds remaining.".format(remaining))
         sys.stdout.flush()
         time.sleep(1)
-    sys.stdout.write("\rYour time is over!            \n")
+    sys.stdout.write("\rYour time is over!\n")
+    t2.stop()
 
 def make_question(next_room, current_room, question):
     answer = input(question["name"])
@@ -180,14 +182,18 @@ def make_question(next_room, current_room, question):
         play_room(next_room)
     else:
         game_state["keys_collected"] = []
-        print("You lost all your keys!")
+        print("You lost the last key!")
         play_room(current_room)
 
-def countdown():
-    t1 = Thread(target=timeout_question)
-    t2 = Thread(target=make_question)
+def countdown(next_room, current_room, question):
+
+    t1 = Thread(target=timeout_question,args=())
+    t2 = Thread(target=make_question ,args=(next_room, current_room, question))
     t1.start()
     t2.start()
+    t1.join()
+    t2.join()
+
 
 def linebreak():
     """
@@ -208,8 +214,8 @@ def play_room(room):
     If it is, the game will end with success. Otherwise, let player either
     explore (list all items in this room) or examine an item found here.
     """
-    
-    
+
+
     game_state["current_room"] = room
     if(game_state["current_room"] == game_state["target_room"]):
         print("Congrats! You escaped the room!")
@@ -290,8 +296,8 @@ def examine_item(item_name):
         print("The item you requested is not found in the current room.")
 
     if(next_room and input("Do you want to go to the next room? 'yes' or 'no'\n").strip() == 'yes'):
-        import random
-        make_question(next_room, current_room, random.choice(game_state["questions"]))
+        countdown(next_room, current_room, random.choice(game_state["questions"]))
+        #make_question(next_room, current_room, random.choice(game_state["questions"]))
         play_room(next_room)
     else:
         play_room(current_room)
